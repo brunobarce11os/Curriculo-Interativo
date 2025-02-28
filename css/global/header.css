@@ -1,0 +1,102 @@
+.header-bg {
+  background-color:#1E1E1E;
+  height: 100px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  max-width: 1266px;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container-avatar {
+  display: flex;
+  padding-left: 62px;
+}
+.img-avatar {
+  max-width: 100%;
+  height: auto;
+}
+.container-perfil-info {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding-left: 155px;
+}
+.nome {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 22px;
+  color: #FFFFFF;
+}
+.cargo {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  color: #FFFFFF;
+}
+.container-contato {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  padding: 10px;
+}
+.telefone {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 25px;
+  color: #FFFFFF; 
+}
+@media (max-width: 700px) {
+  .container-avatar {
+    display: flex;
+    padding-left: 20px;
+  }
+  .container-perfil-info {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      padding-left: 110px;
+}
+}
+@media (max-width: 650px) {
+  .container-avatar {
+    display: flex;
+    padding-left: 20px;
+  }
+  .container-perfil-info {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      padding-left: 110px;
+}
+.telefone {
+  display: none;
+}
+}
+@media (max-width: 430px) {
+  .container-avatar {
+    display: flex;
+    padding-left: 20px;
+  }
+  .img-avatar {
+    max-width: 70%;
+    height: auto;
+  }
+  .container-perfil-info {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      padding-left: 85px;
+}
+.nome {
+  font-size: 15px;
+}
+.cargo {
+  font-size: 14px;
+}
+.telefone {
+  display: none;
+}
+}

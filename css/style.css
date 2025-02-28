@@ -1,0 +1,8 @@
+/* Estilo Global */
+@import "./global/global.css";
+/* Estilo do Cabeçalho */
+@import "./global/header.css";
+/* Estilo da Sessão Principal */
+@import "./section/section.css";
+/* Estilo do Rodapé */
+@import "./footer/footer.css";

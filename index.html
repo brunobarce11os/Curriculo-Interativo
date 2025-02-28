@@ -6,11 +6,167 @@
 
     <title>Bruno Corrêa Barcellos - Currículo interativo - Desenvolvedor Frontend</title>
     <meta name="description" content="Conheça meu portfólio e experiência de forma inovadora! Um currículo interativo com IA, onde você pode tirar dúvidas e explorar minhas habilidades.">
-
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="preload" href="css/style.mim.css" as="style">
     <link rel="stylesheet" href="css/style.css">
-
   </head>
   <body>
+   <header class="header-bg">
+    <div class="header">
+      <div class="container-avatar">
+       <img src="img/avatar-bruno.svg" alt="Avatar Bruno Corrêa Barcellos" class="img-avatar">
+      </div>
+      <div class="container-perfil-info">
+       <span class="nome">Bruno Corrêa Barcellos</span>
+       <span class="cargo">Desenvolvedor Web</span>
+      </div>
+      <div class="container-contato">
+       <a href="https://wa.me/5521985100618" target="_blank">
+        <span class="telefone">+55 21 98510-0618</span>
+         <img src="img/icon-whatsapp.svg" alt="Icone de Whatsapp">
+       </a>
+      </div>
+    </div>
+   </header>
 
+   <section class="section-bg">
+
+     <!-- Div para a resposta -->
+     <div id="respostaDiv" style="display: none;" class="container-respostaDiv">
+    </div>
+     
+    
+    <!-- SEND MESSAGE FORM --> 
+    <div class="container-input-pergunta">
+      <div class="aguarde"><span id="aguarde" style="display: none;">Aguarde...</span></div>
+      <div class="cta-input">
+       <label for="pergunta">Pergunte sobre meu currículo:</label>
+      </div>
+      <div class="input-container">
+       <input type="text" id="pergunta" placeholder="Faça uma pergunta...">
+       <button onclick="enviarPergunta()">
+        <img src="img/vector-send.svg" alt="Botão Enviar">
+       </button>
+      </div>
+     </div>
+
+    <!-- Frequently asked Questions -->
+      <div class="container-perguntas-frequentes">
+        <!-- Optei em separar as ul's em 3 partes para que a modificação estética da posição dos botões seja simples. 
+         Somente trocando de posição das li no html, sem perder o style -->
+        <ul class="lista1">
+         <li><button onclick="enviarPergunta('Informações Pessoais')" aria-label="Perguntar sobre Informações Pessoas"><img src="img/account_circle_24dp_FFFFF.svg" alt="Icone de Perfil">Informações Pessoais</button></li>
+         <li><button onclick="enviarPergunta('Objetivos Profissionais')" aria-label="Perguntar Sobre Objetivos Profissionais"><img src="img/hiking_24dp_303030 1.svg" alt="Icone de Escalada">Objetivos Profissionais</button></li>
+         <li><button onclick="enviarPergunta('Formação Acadêmica')" aria-label="Perguntar Sobre Formação Acadêmica"><img src="img/school_24dp_303030 1.svg" alt="Icone de Capelo">Formação Acadêmica</button></li>
+        </ul>
+        <ul class="lista2">
+          <li><button onclick="enviarPergunta('Habilidades Técnicas')" aria-label="Perguntar Sobre Habilidades Técnicas"><img src="img/code_24dp_303030 1.svg" alt="Icone de < >">Habilidades Técnicas</button></li>
+          <li><button onclick="enviarPergunta('Experiência Profissional')" aria-label="Perguntar Sobre Experiências Profissionais"><img src="img/work_history_24dp_303030 1.svg"alt="icone Work History">Experiência Profissional</button></li>
+          <li><button onclick="enviarPergunta('Projetos e Portfólio')" aria-label="Perguntar Sobre Projetos e Portifólio"><img src="img/devices_24dp_303030 1.svg"alt="Icon devices">Projetos e Portfólio</button></li>
+        </ul>
+        <ul class="lista3">
+          <li><button onclick="enviarPergunta('Soft Skills e Diferenciais')" aria-label="Perguntar Sobre Soft Skills e Diferenciais"><img src="img/psychology_24dp_303030 1.svg"alt="Icon psychology">Soft Skills e Diferenciais</button></li>
+          <li><button onclick="enviarPergunta('Certificações e Cursos')" aria-label="Perguntar Sobre Certificações e Cursos"><img src="img/school_24dp_303030 1 (1).svg"alt="Icon school">Certificações e Cursos</button></li>
+        </ul>
+      </div>
+     </div>
+   </section>
+
+   <footer class="footer-bg">
+    <div class="footer">
+     <span>Currículo com IA</span>
+     <img src="img/copyright_24dp_ECECEC_FILL0_wght400_GRAD0_opsz24 1.svg" alt="icon copyright">
+     <span>2025</span>
+    </div> 
+   </footer>
+
+   <script>
+    // Gera um ID único para cada sessão e armazena no localStorage
+    let sessionId = localStorage.getItem("chatSessionId") || Math.random().toString(36).substr(2, 9);
+    localStorage.setItem("chatSessionId", sessionId);
+
+    // Função para carregar o histórico de mensagens ao abrir a página
+    function carregarHistorico() {
+    let historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
+    let respostaDiv = document.getElementById('respostaDiv');
+    respostaDiv.innerHTML = ""; // Limpa antes de adicionar as mensagens
+
+    historico.forEach(item => {
+        let mensagemElemento = document.createElement("p");
+        mensagemElemento.innerHTML = `<strong>${item.tipo}:</strong> ${item.mensagem}`;
+
+      // Aplica classes CSS diferentes para pergunta e resposta
+      mensagemElemento.classList.add(item.tipo === "Você" ? "pergunta-mensagem" : "resposta-mensagem");
+
+        respostaDiv.appendChild(mensagemElemento);
+    });
+
+    respostaDiv.scrollTop = respostaDiv.scrollHeight; // Rola para a última mensagem
+}
+
+    async function enviarPergunta(pergunta = '') {
+      const perguntaInput = document.getElementById('pergunta');
+      const respostaDiv = document.getElementById('respostaDiv');
+      const containerInputPergunta = document.querySelector('.container-input-pergunta');
+      const containerPerguntasFrequentes = document.querySelector('.container-perguntas-frequentes')
+      const ctaInput = document.querySelector('.cta-input')
+      const aguarde = document.getElementById('aguarde');  // O span para "Aguarde..."
+
+      // Caso o usuário não tenha digitado nada, usa a pergunta do botão
+      const perguntaFinal = pergunta || perguntaInput.value;
+      if (!perguntaFinal) return;
+      
+      containerPerguntasFrequentes.style.display = "none";
+      containerInputPergunta.style.padding = "0"
+      ctaInput.style.display = "none";
+      respostaDiv.style.display = "block";  // Mostra a resposta
+
+      perguntaInput.value = '';
+
+      // Exibe "Aguarde..."
+      aguarde.style.display = "inline";
+
+
+      // Adiciona a pergunta ao histórico
+    let historico = JSON.parse(localStorage.getItem("chatHistorico")) || [];
+    historico.push({ tipo: "Você", mensagem: perguntaFinal });
+    localStorage.setItem("chatHistorico", JSON.stringify(historico));
+
+     // Atualiza a exibição
+     carregarHistorico();
+
+      try {
+        // Envia a pergunta para o seu webhook n8n (substitua a URL abaixo pela sua)
+        const response = await fetch("https://webhooks.studiowebservices.com.br/webhook/9a5bcbac-64d1-4f19-a67e-cd484bf2aabc", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ pergunta: perguntaFinal, sessionId: sessionId })  // Envia a pergunta
+        });
+
+        const data = await response.json(); // Resposta do n8n
+
+        // Formata a resposta para manter as quebras de linha e negrito
+        let respostaFormatada = data.resposta || "Erro ao processar a resposta.";
+            respostaFormatada = respostaFormatada.replace(/\n/g, "<br>"); // Substitui quebras de linha
+            respostaFormatada = respostaFormatada.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"); // Substitui negrito
+
+
+
+       // Adiciona a resposta ao histórico e exibe na tela
+       historico.push({ tipo: "Agente", mensagem: respostaFormatada || "Erro ao processar a resposta." });
+        localStorage.setItem("chatHistorico", JSON.stringify(historico));
+
+
+        carregarHistorico();
+    } catch (error) {
+        console.error("Erro:", error);
+    } finally {
+            // Esconde "Aguarde..."
+            aguarde.style.display = "none";
+    }
+}
+  </script>
   </body>
 </html>
